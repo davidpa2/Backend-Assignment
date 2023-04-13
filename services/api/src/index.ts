@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import * as mongoose from "mongoose";
+import userRouter from "./routes/user.routes";
 
 // [DB Connection]
 
@@ -32,8 +33,10 @@ connectToDatabase(MONGODB_URI);
 const app: Application = express();
 app.use(express.json());
 
+app.use('/user', userRouter);
+
 app.get("/health", async (req: Request, res: Response) => {
-  res.status(200).json({ healthy: true });
+  res.status(200).json({ healthy: 'jajaj' });
 });
 
 // [Express start]
