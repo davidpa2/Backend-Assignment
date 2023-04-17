@@ -6,6 +6,7 @@ const HistorySchema = new Schema({
     fromCurrencyCode: { type: String, require: true },
     fromCurrencyName: { type: String, require: true },
     toCurrencyCode: { type: String, require: true },
+    toCurrencyName: { type: String, require: true },
     exchangeRate: { type: String, require: true },
     lastRefreshed: { type: String, require: true },
     timeZone: { type: String, require: true },
