@@ -8,6 +8,6 @@ const UserSchema = new Schema({
     followedCurrencies: { type: Array }
 });
 
-const UserModel = model("user", UserSchema);
+const UserModel = model("users", UserSchema);
 
 export default UserModel;
