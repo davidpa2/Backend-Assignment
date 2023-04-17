@@ -16,7 +16,8 @@
     "clean": "rm -f dist/bundle.js"
   },
   "dependencies": {
-    "mongoose": "^7.0.3"
+    "mongoose": "^7.0.3",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",

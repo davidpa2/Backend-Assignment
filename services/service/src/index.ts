@@ -1,5 +1,8 @@
 import * as path from "path";
 import * as mongoose from "mongoose";
+import HistoryController from "./controllers/history.controller";
+import UserModel from "./schemas/user.schema";
+import HistoryModel from "./schemas/history.schema";
 
 // [DB Connection]
 
@@ -25,9 +28,26 @@ async function connectToDatabase(connectionUri: string) {
       });
   });
 }
+console.log("Connecting to database...");
 connectToDatabase(MONGODB_URI);
-
-// [Script execution]
-
 console.log("Executing service...");
-process.exit(0);
+
+async function storeCurrencies() {
+  var user = await UserModel.findOne().exec();
+  console.log('Entra: ');
+
+  var interval = setInterval(async () => {
+    if (!user) {
+      user = await UserModel.findOne().exec();
+      console.log('Usuario: ' + user);
+    } else {
+      HistoryController.storeCurrency(user.followedCurrencies);
+      console.log(await HistoryModel.find().exec());
+    }
+  // }, 300000);
+  }, 30000);
+  console.log('sale');
+}
+storeCurrencies();
+
+// process.exit(0);
