@@ -6,7 +6,7 @@ const options = {
         openapi: "3.0.0",
         info: { title: "Backend-Assignment", version: "1.0.0" }
     },
-    apis: ["./routes/user.routes.js", "./schemas/user.schema.js", "./schemas/history.schema.ts"],
+    apis: ["./src/routes/user.routes.ts", "./src/schemas/user.schema.ts", "./src/schemas/history.schema.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
