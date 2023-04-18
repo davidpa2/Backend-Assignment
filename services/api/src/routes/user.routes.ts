@@ -6,4 +6,6 @@ const userRouter = Router();
 
 userRouter.patch("/suscribeCurrency", SuscribeCurrencyDTO, UserController.suscribeCurrency);
 
+userRouter.get("/getCurrenciesHistory", UserController.getCurrenciesHistory)
+
 export default userRouter;
