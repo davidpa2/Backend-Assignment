@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import * as mongoose from "mongoose";
 import userRouter from "./routes/user.routes";
+import swaggerDocs from "./swagger";
 
 // [DB Connection]
 
@@ -35,14 +36,11 @@ app.use(express.json());
 
 app.use('/user', userRouter);
 
-app.get("/health", async (req: Request, res: Response) => {
-  res.status(200).json({ healthy: 'jajaj' });
-});
-
 // [Express start]
 
 const PORT: number | string = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`App listening to ${PORT}....`);
   console.log("Press Ctrl+C to quit.");
+  swaggerDocs(app, PORT);
 });
