@@ -115,14 +115,16 @@ userRouter.patch("/subscribeCurrency", SuscribeCurrencyDTO, UserController.suscr
  * components:
  *   schemas:
  *     HistorySchema:
- *       type: object
- *       properties:
- *         currency: 
- *           type: string
- *           example: EUR
- *         currencyLog: 
- *           type: array
- *           example: [] 
+ *       type: array
+ *       items:
+ *         type: object
+ *         properties:
+ *           currency: 
+ *             type: string
+ *             example: EUR
+ *           currencyLog: 
+ *             type: array
+ *             example: [] 
  */
 userRouter.get("/getCurrenciesHistory", UserController.getCurrenciesHistory)
 
