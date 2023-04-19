@@ -11,21 +11,29 @@ export class CoreService {
     public api: ApiService,
     public userService: UserService
   ) {
-    api.user.userGetUserGet().subscribe({
+    this.getCurrenciesHistory(); // First iteration
+
+    setInterval(() => {
+      this.getCurrenciesHistory();
+      console.log('History interval');
+    }, 30000)
+  }
+
+  getCurrenciesHistory() {
+    this.api.user.userGetUserGet().subscribe({
       next: user => {
         if (user) {
-          userService.user = user;
+          this.userService.user = user;
 
-          api.user.userGetCurrenciesHistoryGet().subscribe({
+          this.api.user.userGetCurrenciesHistoryGet().subscribe({
             next: history => {
-              userService.currencyHistory = history;
+              this.userService.currencyHistory = history;
             }
           });
         }
       },
       error: err => {
         console.log(err);
-        
       }
     })
   }

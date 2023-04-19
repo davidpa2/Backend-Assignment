@@ -15,8 +15,7 @@ export class MainPageComponent implements OnInit {
 
   constructor(private core: CoreService, public userService: UserService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   subscribeCurrency(currency: string) {
     console.log(currency);
@@ -24,17 +23,31 @@ export class MainPageComponent implements OnInit {
     this.core.api.user.userSubscribeCurrencyPatch({ body: { currency } }).subscribe({
       next: res => {
         console.log(res);
-
+        if (!this.userService.user) {
+          this.core.api.user.userGetUserGet().subscribe({
+            next: user => {
+              if (user) {
+                this.core.userService.user = user;
+                this.core.getCurrenciesHistory();
+              }
+            },
+            error: err => {
+              console.log(err);
+            }
+          })
+        } else {
+          this.core.getCurrenciesHistory();
+        }
       },
       error: err => {
-        console.error(err);
+        // console.error(err);
       }
     })
     this.showCurrencies = false;
   }
 
   checkCurrency(currency: string) {
-    if (this.userService.currencyHistory.length) {
+    if (this.userService.currencyHistory) {
       return this.userService.currencyHistory?.some(element => element.currency === currency)
     }
   }
