@@ -88,11 +88,44 @@ userRouter.delete("/deleteUser", UserController.deleteUser)
  *       properties:
  *         currency: 
  *           type: string
- *           example: EUR 
+ *           example: USD 
  *       required:
  *         - name
  */
 userRouter.patch("/subscribeCurrency", SubscribeCurrencyDTO, UserController.subscribeCurrency);
+
+/**
+ * @openapi
+ * /user/unsubscribeCurrency:
+ *   patch:
+ *     summary: Unsuscribe to a currency
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/SuscribeCurrencySchema"
+ *     responses:
+ *       200:
+ *         description: Successfully unsubscribed to currency!
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *       5XX:
+ *         description: Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/ErrorsSchema"
+ */
+userRouter.patch("/unsubscribeCurrency", SubscribeCurrencyDTO, UserController.unsubscribeCurrency);
 
 /**
  * @openapi

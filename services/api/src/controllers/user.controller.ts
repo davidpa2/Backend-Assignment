@@ -42,7 +42,27 @@ class UserController {
                 await user.save();
             }
         }
-        return res.status(200).send('Successfully suscribed to currency');
+        return res.status(200).send('Successfully subscribed to currency');
+    }
+
+
+    static async unsubscribeCurrency(req: any, res: any) {
+        const { currency } = req.body;
+
+        var user = await UserModel.findOne().exec();
+        if (!user) return res.status(409).send({ 'error': 'There is no user registered yet' });
+
+        if (user.followedCurrencies.indexOf(currency) === -1) {
+            return res.status(409).send({ 'error': 'You wasn\'t subscribed to that currency' });
+        }
+        for (let i = 0; i < user.followedCurrencies.length; i++) {
+            if (user.followedCurrencies[i] === currency) {
+                user.followedCurrencies = user.followedCurrencies.filter(c => c != currency);
+                break;
+            }
+        }
+        await user.save();
+        return res.status(200).send('Successfully unsubscribed to currency');
     }
 
 
@@ -55,8 +75,7 @@ class UserController {
 
         var promise = new Promise<IHistory[]>((resolve, reject) => {
             user?.followedCurrencies.forEach(async (currency: string) => {
-                var currencyLog = await HistoryModel.find({ fromCurrencyCode: currency }).limit(10).sort({"lastRefreshed": -1}).exec();
-                console.log(currencyLog);
+                var currencyLog = await HistoryModel.find({ fromCurrencyCode: currency }).limit(10).sort({ "lastRefreshed": -1 }).exec();
                 if (currencyLog.length) {
                     jsonResponse[i] = { currency, currencyLog: currencyLog };
                 }
