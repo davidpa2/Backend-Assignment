@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'src/app/services/core';
 import { currencyList } from 'src/app/services/currencyList';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-main-page',
@@ -12,7 +13,7 @@ export class MainPageComponent implements OnInit {
   showCurrencies = false;
   currencyList = currencyList;
 
-  constructor(private core: CoreService) { }
+  constructor(private core: CoreService, public userService: UserService) { }
 
   ngOnInit(): void {
   }
