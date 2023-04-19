@@ -24,13 +24,18 @@ export class MainPageComponent implements OnInit {
     this.core.api.user.userSubscribeCurrencyPatch({ body: { currency } }).subscribe({
       next: res => {
         console.log(res);
-        
+
       },
       error: err => {
         console.error(err);
       }
     })
-
     this.showCurrencies = false;
+  }
+
+  checkCurrency(currency: string) {
+    if (this.userService.currencyHistory.length) {
+      return this.userService.currencyHistory?.some(element => element.currency === currency)
+    }
   }
 }

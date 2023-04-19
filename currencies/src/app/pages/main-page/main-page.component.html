@@ -11,9 +11,11 @@
         <div *ngIf="showCurrencies" class="currencySelector">
             <p class="text-xl">Select the currency you want to subscribe:</p>
             <div *ngFor="let currency of currencyList" class="mt-1">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded-full"
-                    (click)="subscribeCurrency(currency.currencyCode)">Select</button>
-                <p class="ml-4">{{currency.currencyCode}} - {{currency.name}} </p>
+                <ng-container *ngIf="!checkCurrency(currency.currencyCode)">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded-full"
+                        (click)="subscribeCurrency(currency.currencyCode)">Select</button>
+                    <p class="ml-4">{{currency.currencyCode}} - {{currency.name}} </p>
+                </ng-container>
             </div>
             <div class="flex justify-center">
                 <button type="button" (click)="showCurrencies = false"
