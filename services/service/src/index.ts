@@ -39,10 +39,8 @@ async function storeCurrencies() {
   var interval = setInterval(async () => {
     if (!user) {
       user = await UserModel.findOne().exec();
-      console.log('Usuario: ' + user);
     } else {
       HistoryController.storeCurrency(user.followedCurrencies);
-      console.log(await HistoryModel.find().exec());
     }
   // }, 300000);
   }, 30000);

@@ -49,6 +49,8 @@ const userRouter = Router();
  */
 userRouter.get("/getUser", UserController.getUser)
 
+userRouter.delete("/deleteUser", UserController.deleteUser)
+
 /**
  * @openapi
  * /user/subscribeCurrency:

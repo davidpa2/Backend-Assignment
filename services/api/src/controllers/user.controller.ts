@@ -16,6 +16,15 @@ class UserController {
         return res.send(user);
     }
 
+    static async deleteUser(req: any, res: any) {
+        var user = await UserModel.findOne().exec();
+        if (!user) return res.status(409).send({ 'error': 'There is no user registered yet' });
+
+        await UserModel.deleteOne().exec();
+
+        return res.status(200).send('User deleted succesfully');
+    }
+
 
     static async subscribeCurrency(req: any, res: any) {
         const { currency } = req.body;
