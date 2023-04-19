@@ -2,7 +2,7 @@ import { Type } from '@sinclair/typebox';
 import Ajv from 'ajv';
 import addErrors from 'ajv-errors';
 
-const SuscribeCurrencyDTOSchema = Type.Object({
+const SubscribeCurrencyDTOSchema = Type.Object({
     currency: Type.String({
         maxLength: 3,
         minLength: 3,
@@ -22,12 +22,12 @@ const SuscribeCurrencyDTOSchema = Type.Object({
 const ajv = new Ajv({ allErrors: true });
 addErrors(ajv);
 
-const validateSchema = ajv.compile(SuscribeCurrencyDTOSchema);
+const validateSchema = ajv.compile(SubscribeCurrencyDTOSchema);
 
-const SuscribeCurrencyDTO = (req: any, res: any, next: any) => {
+const SubscribeCurrencyDTO = (req: any, res: any, next: any) => {
     const isValidDTO = validateSchema(req.body);
     if (!isValidDTO) return res.status(400).send({ errors: validateSchema.errors?.map(error => error.message) })
     next();
 }
 
-export default SuscribeCurrencyDTO;
+export default SubscribeCurrencyDTO;

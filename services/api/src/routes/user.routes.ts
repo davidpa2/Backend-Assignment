@@ -1,6 +1,6 @@
 import { Router } from "express";
 import UserController from "../controllers/user.controller";
-import SuscribeCurrencyDTO from "../dto/suscribeCurrency.dto";
+import SubscribeCurrencyDTO from "../dto/suscribeCurrency.dto";
 
 const userRouter = Router();
 
@@ -90,7 +90,7 @@ userRouter.get("/getUser", UserController.getUser)
  *       required:
  *         - name
  */
-userRouter.patch("/subscribeCurrency", SuscribeCurrencyDTO, UserController.suscribeCurrency);
+userRouter.patch("/subscribeCurrency", SubscribeCurrencyDTO, UserController.subscribeCurrency);
 
 /**
  * @openapi
