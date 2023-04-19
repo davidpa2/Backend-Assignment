@@ -6,6 +6,51 @@ const userRouter = Router();
 
 /**
  * @openapi
+ * /user/getUser:
+ *   get:
+ *     summary: Get default user
+ *     tags:
+ *       - Users
+ *     responses:
+ *       200:
+ *         description: Default user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/UserSchema"
+ *       5XX:
+ *         description: Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/ErrorsSchema"
+ * components:
+ *   schemas:
+ *     ErrorsSchema:
+ *       type: object
+ *       properties:
+ *         errors: 
+ *           type: array
+ *           items: 
+ *             type: string
+ *             example: Must have required property 'currency'
+ *     UserSchema:
+ *       type: object
+ *       properties:
+ *         name: 
+ *           type: string
+ *           example: Jessica
+ *         surname: 
+ *           type: string
+ *           example: Friedrich
+ *         followedCurrencies: 
+ *           type: array
+ *           example: [] 
+ */
+userRouter.get("/getUser", UserController.getUser)
+
+/**
+ * @openapi
  * /user/subscribeCurrency:
  *   patch:
  *     summary: Suscribe to a currency
@@ -44,14 +89,6 @@ const userRouter = Router();
  *           example: EUR 
  *       required:
  *         - name
- *     ErrorsSchema:
- *       type: object
- *       properties:
- *         errors: 
- *           type: array
- *           items: 
- *             type: string
- *             example: Must have required property 'currency'
  */
 userRouter.patch("/subscribeCurrency", SuscribeCurrencyDTO, UserController.suscribeCurrency);
 
@@ -68,7 +105,7 @@ userRouter.patch("/subscribeCurrency", SuscribeCurrencyDTO, UserController.suscr
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/ProfileSchema"
+ *               $ref: "#/components/schemas/HistorySchema"
  *       5XX:
  *         description: Error
  *         content:
@@ -77,7 +114,7 @@ userRouter.patch("/subscribeCurrency", SuscribeCurrencyDTO, UserController.suscr
  *               $ref: "#/components/schemas/ErrorsSchema"
  * components:
  *   schemas:
- *     ProfileSchema:
+ *     HistorySchema:
  *       type: object
  *       properties:
  *         currency: 

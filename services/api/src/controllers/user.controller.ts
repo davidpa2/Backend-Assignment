@@ -9,6 +9,13 @@ export interface IHistory {
 
 class UserController {
 
+    static async getUser(req: any, res: any) {
+        var user = await UserModel.findOne().exec();
+        if (!user) return res.status(409).send({'error': 'There is no user registered yet'});
+
+        return res.send(user);
+    }
+
     static async suscribeCurrency(req: any, res: any) {
         const { currency } = req.body;
 

@@ -4,7 +4,10 @@ import swaggerUi from "swagger-ui-express";
 const options = {
     definition: {
         openapi: "3.0.0",
-        info: { title: "Backend-Assignment", version: "1.0.0" }
+        info: { title: "Backend-Assignment", version: "1.0.0" },
+        servers: [{
+            url: "http://localhost:8080"
+        }]
     },
     apis: ["./src/routes/user.routes.ts", "./src/schemas/user.schema.ts", "./src/schemas/history.schema.ts"],
 };
