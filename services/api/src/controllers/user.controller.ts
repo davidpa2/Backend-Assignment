@@ -41,25 +41,25 @@ class UserController {
         var user = await UserModel.findOne().exec();
         if (!user) return res.status(409).send('There is no user registered yet')
 
-        var jsonResponse: IHistory[];
+        var jsonResponse: IHistory[] = [];
         var i = 0;
-        res.send(user.followedCurrencies.forEach((currency: string) => {
-            return new Promise<IHistory[]>(async (resolve, reject) => {
-                var currencyLog = await HistoryModel.find({ fromCurrencyCode: currency }, { limit: 10 }).exec();
+
+        var promise = new Promise<IHistory[]>((resolve, reject) => {
+            user?.followedCurrencies.forEach(async (currency: string) => {
+                var currencyLog = await HistoryModel.find({ fromCurrencyCode: currency }).limit(10).sort({"lastRefreshed": -1}).exec();
                 console.log(currencyLog);
                 if (currencyLog.length) {
-                    jsonResponse.push({ currency, currencyLog: currencyLog });
-                    // jsonResponse[currency] = currencyLog;
+                    jsonResponse[i] = { currency, currencyLog: currencyLog };
                 }
                 i++;
                 if (i == user?.followedCurrencies.length) {
                     resolve(jsonResponse);
                 }
             })
-        }))
-        // console.log(jsonResponse);
-
-        // return res.send(jsonResponse);
+        })
+        promise.then(value => {
+            res.send(value)
+        })
     }
 }
 
