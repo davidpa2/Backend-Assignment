@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'src/app/services/core';
+import { currencyList } from 'src/app/services/currencyList';
 
 @Component({
   selector: 'app-main-page',
@@ -9,14 +10,7 @@ import { CoreService } from 'src/app/services/core';
 export class MainPageComponent implements OnInit {
 
   showCurrencies = false;
-  currencyList = [
-    { currencyCode: "USD", name: "American dollar" },
-    { currencyCode: "JPY", name: "Japanese yen" },
-    { currencyCode: "GBP", name: "Pound sterling" },
-    { currencyCode: "AUD", name: "Australian dollar" },
-    { currencyCode: "CHF", name: "Swiss franc" },
-    { currencyCode: "CNH", name: "Chinese renminbi" },
-  ];
+  currencyList = currencyList;
 
   constructor(private core: CoreService) { }
 
