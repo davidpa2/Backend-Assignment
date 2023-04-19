@@ -1,9 +1,9 @@
-<h2 class="text-center text-2xl mt-7">
-    Suscribe to the main currencies in the world!
+<h2 class="text-center text-3xl mt-7">
+    Subscribe to the main currencies in the world!
 </h2>
 
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mx-6 sm:mx-12 md:mx-28 my-12">
-    <div class="h-60 border-4 rounded-2xl border-blue-700 bg-blue-200 flex justify-center items-center">
+    <div class="min-h-60 border-4 rounded-2xl border-blue-700 bg-blue-200 flex justify-center items-center">
         <div class="cursor-pointer" (click)="showCurrencies = true">
             <img src="../../../assets/AddIcon.png" alt="AddIcon" class="w-24 ml-auto mr-auto">
             <p class="text-xl">Add currency</p>
@@ -27,29 +27,29 @@
     </div>
 
     <ng-container *ngFor="let currency of userService.currencyHistory">
-        <div *ngIf="currency" class="h-60 border-4 rounded-2xl border-blue-700 bg-blue-200">
+        <div *ngIf="currency" class="min-h-60 border-4 rounded-2xl border-blue-700 bg-blue-200">
             <div class="bg-white rounded-xl grid grid-cols-2 p-3">
                 <div class="flex items-center">
                     <app-badge [type]="currency.currencyLog[0].fromCurrencyCode"></app-badge>
                     <p class="text-xl font-bold">{{currency.currencyLog[0].fromCurrencyName}}</p>
                 </div>
-                <div class="text-right font-bold">
+                <div class=" font-bold flex items-center justify-end">
                     <app-badge [type]="currency.currencyLog[0].toCurrencyCode"></app-badge>
-                    <p class="text-xl">{{currency.currencyLog[0].toCurrencyName}}</p>
+                    <p class="text-xl text-right">{{currency.currencyLog[0].toCurrencyName}}</p>
                 </div>
             </div>
 
             <div class="p-4 text-lg leading-8">
                 <p>Currently, 1.00 {{currency.currencyLog[0].fromCurrencyName}} equals
                     {{currency.currencyLog[0].exchangeRate | number : '1.2-2'}}
-                    {{currency.currencyLog[0].fromCurrencyCode}}</p><br>
+                    {{currency.currencyLog[0].toCurrencyCode}}</p><br>
                 <p>
                     <span class="font-bold">Ask price:</span>
-                    {{currency.currencyLog[0].askPrice | number : '1.2-5'}} {{currency.currencyLog[0].fromCurrencyCode}}
+                    {{currency.currencyLog[0].askPrice | number : '1.2-5'}} {{currency.currencyLog[0].toCurrencyCode}}
                 </p><br>
                 <p>
                     <span class="font-bold">Bid price:</span>
-                    {{currency.currencyLog[0].bidPrice | number : '1.2-5'}} {{currency.currencyLog[0].fromCurrencyCode}}
+                    {{currency.currencyLog[0].bidPrice | number : '1.2-5'}} {{currency.currencyLog[0].toCurrencyCode}}
                 </p>
             </div>
         </div>

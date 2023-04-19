@@ -6,6 +6,6 @@ import { HistorySchema, UserSchema } from './api/models';
 })
 export class UserService {
   user: UserSchema;
-  currencyHistory: HistorySchema;
+  currencyHistory: HistorySchema = null;
   constructor() { }
 }
