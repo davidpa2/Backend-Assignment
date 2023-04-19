@@ -9,8 +9,9 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { ProfileSchema } from '../models/profile-schema';
+import { HistorySchema } from '../models/history-schema';
 import { SuscribeCurrencySchema } from '../models/suscribe-currency-schema';
+import { UserSchema } from '../models/user-schema';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,57 @@ export class UsersService extends BaseService {
     http: HttpClient
   ) {
     super(config, http);
+  }
+
+  /**
+   * Path part for operation userGetUserGet
+   */
+  static readonly UserGetUserGetPath = '/user/getUser';
+
+  /**
+   * Get default user.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `userGetUserGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userGetUserGet$Response(params?: {
+  }): Observable<StrictHttpResponse<UserSchema>> {
+
+    const rb = new RequestBuilder(this.rootUrl, UsersService.UserGetUserGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<UserSchema>;
+      })
+    );
+  }
+
+  /**
+   * Get default user.
+   *
+   *
+   *
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `userGetUserGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userGetUserGet(params?: {
+  }): Observable<UserSchema> {
+
+    return this.userGetUserGet$Response(params).pipe(
+      map((r: StrictHttpResponse<UserSchema>) => r.body as UserSchema)
+    );
   }
 
   /**
@@ -103,7 +155,7 @@ export class UsersService extends BaseService {
    * This method doesn't expect any request body.
    */
   userGetCurrenciesHistoryGet$Response(params?: {
-  }): Observable<StrictHttpResponse<ProfileSchema>> {
+  }): Observable<StrictHttpResponse<HistorySchema>> {
 
     const rb = new RequestBuilder(this.rootUrl, UsersService.UserGetCurrenciesHistoryGetPath, 'get');
     if (params) {
@@ -115,7 +167,7 @@ export class UsersService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<ProfileSchema>;
+        return r as StrictHttpResponse<HistorySchema>;
       })
     );
   }
@@ -131,10 +183,10 @@ export class UsersService extends BaseService {
    * This method doesn't expect any request body.
    */
   userGetCurrenciesHistoryGet(params?: {
-  }): Observable<ProfileSchema> {
+  }): Observable<HistorySchema> {
 
     return this.userGetCurrenciesHistoryGet$Response(params).pipe(
-      map((r: StrictHttpResponse<ProfileSchema>) => r.body as ProfileSchema)
+      map((r: StrictHttpResponse<HistorySchema>) => r.body as HistorySchema)
     );
   }
 

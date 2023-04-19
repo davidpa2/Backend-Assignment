@@ -4,7 +4,42 @@
         "title": "Backend-Assignment",
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://localhost:8080"
+        }
+    ],
     "paths": {
+        "/user/getUser": {
+            "get": {
+                "summary": "Get default user",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Default user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserSchema"
+                                }
+                            }
+                        }
+                    },
+                    "5XX": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorsSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/subscribeCurrency": {
             "patch": {
                 "summary": "Suscribe to a currency",
@@ -63,7 +98,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ProfileSchema"
+                                    "$ref": "#/components/schemas/HistorySchema"
                                 }
                             }
                         }
@@ -84,18 +119,6 @@
     },
     "components": {
         "schemas": {
-            "SuscribeCurrencySchema": {
-                "type": "object",
-                "properties": {
-                    "currency": {
-                        "type": "string",
-                        "example": "EUR"
-                    }
-                },
-                "required": [
-                    "name"
-                ]
-            },
             "ErrorsSchema": {
                 "type": "object",
                 "properties": {
@@ -108,16 +131,48 @@
                     }
                 }
             },
-            "ProfileSchema": {
+            "UserSchema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Jessica"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "Friedrich"
+                    },
+                    "followedCurrencies": {
+                        "type": "array",
+                        "example": []
+                    }
+                }
+            },
+            "SuscribeCurrencySchema": {
                 "type": "object",
                 "properties": {
                     "currency": {
                         "type": "string",
                         "example": "EUR"
-                    },
-                    "currencyLog": {
-                        "type": "array",
-                        "example": []
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            },
+            "HistorySchema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "currency": {
+                            "type": "string",
+                            "example": "EUR"
+                        },
+                        "currencyLog": {
+                            "type": "array",
+                            "example": []
+                        }
                     }
                 }
             }
