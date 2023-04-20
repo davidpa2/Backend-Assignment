@@ -140,6 +140,70 @@ export class UsersService extends BaseService {
   }
 
   /**
+   * Path part for operation userUnsubscribeCurrencyPatch
+   */
+  static readonly UserUnsubscribeCurrencyPatchPath = '/user/unsubscribeCurrency';
+
+  /**
+   * Unsuscribe to a currency.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `userUnsubscribeCurrencyPatch()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  userUnsubscribeCurrencyPatch$Response(params: {
+    body: SuscribeCurrencySchema
+  }): Observable<StrictHttpResponse<{
+'status'?: string;
+}>> {
+
+    const rb = new RequestBuilder(this.rootUrl, UsersService.UserUnsubscribeCurrencyPatchPath, 'patch');
+    if (params) {
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<{
+        'status'?: string;
+        }>;
+      })
+    );
+  }
+
+  /**
+   * Unsuscribe to a currency.
+   *
+   *
+   *
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `userUnsubscribeCurrencyPatch$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  userUnsubscribeCurrencyPatch(params: {
+    body: SuscribeCurrencySchema
+  }): Observable<{
+'status'?: string;
+}> {
+
+    return this.userUnsubscribeCurrencyPatch$Response(params).pipe(
+      map((r: StrictHttpResponse<{
+'status'?: string;
+}>) => r.body as {
+'status'?: string;
+})
+    );
+  }
+
+  /**
    * Path part for operation userGetCurrenciesHistoryGet
    */
   static readonly UserGetCurrenciesHistoryGetPath = '/user/getCurrenciesHistory';
