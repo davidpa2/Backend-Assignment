@@ -23,9 +23,9 @@
         class="bg-red-600 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-gray-700 dark:text-blue-400 border-2 border-white">
         {{type}}
     </span>
-    <span *ngSwitchCase="'CNH'"
+    <span *ngSwitchCase="'CNY'"
         class="bg-red-600 text-yellow-400 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-xl dark:bg-gray-700 dark:text-blue-400 border-2 border-yellow-400">
         {{type}}
     </span>
-    <div *ngSwitchDefault>output2</div>
+    <div *ngSwitchDefault>{{type}}</div>
 </ng-container>

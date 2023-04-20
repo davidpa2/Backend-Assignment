@@ -18,11 +18,8 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void { }
 
   subscribeCurrency(currency: string) {
-    console.log(currency);
-
     this.core.api.user.userSubscribeCurrencyPatch({ body: { currency } }).subscribe({
       next: res => {
-        console.log(res);
         if (!this.userService.user) {
           this.core.api.user.userGetUserGet().subscribe({
             next: user => {
@@ -32,7 +29,7 @@ export class MainPageComponent implements OnInit {
               }
             },
             error: err => {
-              console.log(err);
+              console.error(err);
             }
           })
         } else {
@@ -40,10 +37,22 @@ export class MainPageComponent implements OnInit {
         }
       },
       error: err => {
-        // console.error(err);
+        console.error(err);
       }
     })
     this.showCurrencies = false;
+  }
+
+  unsubscribeCurrency(currency: string) {
+    this.core.api.user.userUnsubscribeCurrencyPatch({ body: { currency } }).subscribe({
+      next: res => {
+        this.core.userService.currencyHistory = this.core.userService.currencyHistory.filter(c => c != currency);
+        this.core.getCurrenciesHistory();
+      },
+      error: err => {
+        console.error(err);
+      },
+    })
   }
 
   checkCurrency(currency: string) {
