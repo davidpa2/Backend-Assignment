@@ -1,8 +1,6 @@
 import * as path from "path";
 import * as mongoose from "mongoose";
 import HistoryController from "./controllers/history.controller";
-import UserModel from "./schemas/user.schema";
-import HistoryModel from "./schemas/history.schema";
 
 // [DB Connection]
 
@@ -32,19 +30,12 @@ console.log("Connecting to database...");
 connectToDatabase(MONGODB_URI);
 console.log("Executing service...");
 
-async function storeCurrencies() {
-  var user = await UserModel.findOne().exec();
-  console.log('Entra: ');
+const currencyList = ['USD', 'JPY', 'AUD', 'GBP', 'CHF', 'CNY'];
 
-  var interval = setInterval(async () => {
-    if (!user) {
-      user = await UserModel.findOne().exec();
-    } else {
-      HistoryController.storeCurrency(user.followedCurrencies);
-    }
-  // }, 300000);
+function storeCurrencies() {
+  var interval = setInterval(() => {
+    HistoryController.storeCurrency(currencyList);
   }, 30000);
-  console.log('sale');
 }
 storeCurrencies();
 

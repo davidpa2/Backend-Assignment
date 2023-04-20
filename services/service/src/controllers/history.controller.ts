@@ -5,22 +5,22 @@ class HistoryController {
     static async storeCurrency(currencies: string[]) {
         currencies.forEach(currency => {
             console.log(currency);
-            
+
             fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${currency}&to_currency=EUR&apikey=BDQL0QRI3UKLTQ0J`)
-                .then(response => response.json())
+                .then(async response => await response.json())
                 .then(async json => {
                     const jsonTitle = json["Realtime Currency Exchange Rate"];
                     const historyLog = new HistoryModel({
                         _id: uuid(),
-                        fromCurrencyCode: jsonTitle["1. From_Currency Code"],
-                        fromCurrencyName: jsonTitle["2. From_Currency Name"],
-                        toCurrencyCode: jsonTitle["3. To_Currency Code"],
-                        toCurrencyName: jsonTitle["4. To_Currency Name"],
-                        exchangeRate: jsonTitle["5. Exchange Rate"],
-                        lastRefreshed: jsonTitle["6. Last Refreshed"],
-                        timeZone: jsonTitle["7. Time Zone"],
-                        bidPrice: jsonTitle["8. Bid Price"],
-                        askPrice: jsonTitle["9. Ask Price"],
+                        fromCurrencyCode: jsonTitle[0],
+                        fromCurrencyName: jsonTitle[1],
+                        toCurrencyCode: jsonTitle[2],
+                        toCurrencyName: jsonTitle[3],
+                        exchangeRate: jsonTitle[4],
+                        lastRefreshed: jsonTitle[5],
+                        timeZone: jsonTitle[6],
+                        bidPrice: jsonTitle[7],
+                        askPrice: jsonTitle[8],
                     });
                     await historyLog.save();
                 });
