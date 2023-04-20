@@ -11,11 +11,23 @@ export class CoreService {
     public api: ApiService,
     public userService: UserService
   ) {
-    this.getCurrenciesHistory(); // First iteration
+    api.user.userGetUserGet().subscribe({
+      next: user => {
+          if (user.followedCurrencies?.length) {
+            userService.user = user;
+            this.getCurrenciesHistory();
+          }
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
 
     setInterval(() => {
-      this.getCurrenciesHistory();
-      console.log('History interval');
+      if (userService.user.followedCurrencies.length) {
+        this.getCurrenciesHistory();
+        console.log('History interval');
+      }
     }, 30000)
   }
 
