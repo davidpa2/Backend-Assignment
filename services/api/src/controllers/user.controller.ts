@@ -22,7 +22,7 @@ class UserController {
 
         await UserModel.deleteOne().exec();
 
-        return res.status(200).send('User deleted succesfully');
+        return res.send('User deleted succesfully');
     }
 
 
@@ -42,7 +42,7 @@ class UserController {
                 await user.save();
             }
         }
-        return res.status(200).send('Successfully subscribed to currency');
+        return res.send({ "status": "OK" });
     }
 
 
@@ -62,7 +62,7 @@ class UserController {
             }
         }
         await user.save();
-        return res.status(200).send('Successfully unsubscribed to currency');
+        return res.send({ "status": "OK" });
     }
 
 
