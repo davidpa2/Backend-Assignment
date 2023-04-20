@@ -30,12 +30,12 @@ console.log("Connecting to database...");
 connectToDatabase(MONGODB_URI);
 console.log("Executing service...");
 
-const currencyList = ['USD', 'JPY', 'AUD', 'GBP', 'CHF', 'CNY'];
+const currencyList = ['USD', 'JPY', 'AUD', 'CHF', 'CNY'];
 
 function storeCurrencies() {
   var interval = setInterval(() => {
     HistoryController.storeCurrency(currencyList);
-  }, 30000);
+  }, 35000);
 }
 storeCurrencies();
 
