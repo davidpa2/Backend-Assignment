@@ -24,7 +24,7 @@
             <div class="flex justify-center">
                 <button type="button" (click)="showCurrencies = false"
                     class="text-white mt-4 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4
-                    focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg px-5 py-2.5 text-center mr-2 mb-2">
+                    focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full px-5 py-2.5 text-center mr-2 mb-2">
                     Cancel</button>
             </div>
         </div>
@@ -32,7 +32,7 @@
 
     <!-- Currency cards -->
     <ng-container *ngFor="let currency of core.userService.currencyHistory">
-        <div *ngIf="currency" class="min-h-60 border-4 rounded-2xl border-blue-700 bg-blue-200">
+        <div #showHistory class="min-h-60 border-4 rounded-2xl border-blue-700 bg-blue-200">
             <div class="bg-white rounded-xl grid grid-cols-2 p-3">
                 <div class="flex items-center">
                     <app-badge [type]="currency.currencyLog[0].fromCurrencyCode"></app-badge>
@@ -59,13 +59,72 @@
             </div>
 
             <div class="grid grid-cols-2 mb-4">
-                <div>
-
+                <div class="flex justify-center">
+                    <button
+                        class="border-2 border-green-700 bg-white text-green-500 hover:text-green-700 font-medium px-2 rounded-full"
+                        (click)="showHistory[currency.currency] = true">Check history</button>
                 </div>
-                <div class="">
+                <div class="flex justify-center">
                     <button
                         class="border-2 border-red-700 bg-white text-red-500 hover:text-red-700 font-medium px-2 rounded-full"
                         (click)="unsubscribeCurrency(currency.currencyLog[0].fromCurrencyCode)">Unsubscribe</button>
+                </div>
+            </div>
+
+            <div *ngIf="showHistory[currency.currency]" class="checkHistory">
+                <div class="flex justify-between">
+                    <p class="text-2xl">
+                        <app-badge [type]="currency.currencyLog[0].fromCurrencyCode"></app-badge>
+                        {{currency.currencyLog[0].fromCurrencyName}} currency history:
+                    </p>
+
+                    <p class="text-right text-3xl font-bold cursor-pointer"
+                        (click)="showHistory[currency.currency] = false">x</p>
+                </div>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-blue-200 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Date
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Exchange rate
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Bid price
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Ask price
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let log of currency.currencyLog"
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{log.lastRefreshed}}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{log.exchangeRate}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{log.bidPrice}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{log.askPrice}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="button" (click)="showHistory[currency.currency] = false"
+                        class="text-white mt-4 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4
+                        focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full px-5 py-2.5 text-center mr-2 mb-2">
+                        Leave</button>
                 </div>
             </div>
         </div>
