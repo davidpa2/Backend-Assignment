@@ -56,7 +56,7 @@ export class MainPageComponent implements OnInit {
   }
 
   checkCurrency(currency: string) {
-    if (this.userService.currencyHistory) {
+    if (this.userService.currencyHistory.length) {
       return this.userService.currencyHistory?.some(element => element.currency === currency)
     }
   }

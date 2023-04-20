@@ -20,21 +20,10 @@ export class CoreService {
   }
 
   getCurrenciesHistory() {
-    // this.api.user.userGetUserGet().subscribe({
-    //   next: user => {
-    //     if (user) {
-    //       this.userService.user = user;
-
-          this.api.user.userGetCurrenciesHistoryGet().subscribe({
-            next: history => {
-              this.userService.currencyHistory = history;
-            }
-          });
-    //     }
-    //   },
-    //   error: err => {
-    //     console.log(err);
-    //   }
-    // })
+    this.api.user.userGetCurrenciesHistoryGet().subscribe({
+      next: history => {
+        this.userService.currencyHistory = history.filter(c => c != null);
+      }
+    });
   }
 }
