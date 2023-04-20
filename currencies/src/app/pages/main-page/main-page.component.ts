@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'src/app/services/core';
 import { currencyList } from 'src/app/services/currencyList';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-main-page',
@@ -46,8 +45,12 @@ export class MainPageComponent implements OnInit {
   unsubscribeCurrency(currency: string) {
     this.core.api.user.userUnsubscribeCurrencyPatch({ body: { currency } }).subscribe({
       next: res => {
-        this.core.userService.currencyHistory = this.core.userService.currencyHistory.filter(c => c != currency);
-        this.core.getCurrenciesHistory();
+        if (this.core.userService.currencyHistory.length == 1) {
+          this.core.userService.currencyHistory = [];
+        } else {
+          this.core.userService.currencyHistory = this.core.userService.currencyHistory.filter(c => c != currency);
+          this.core.getCurrenciesHistory();
+        }
       },
       error: err => {
         console.error(err);
