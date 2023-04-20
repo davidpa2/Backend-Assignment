@@ -11,14 +11,14 @@ class UserController {
 
     static async getUser(req: any, res: any) {
         var user = await UserModel.findOne().exec();
-        if (!user) return res.status(409).send({ 'error': 'There is no user registered yet' });
+        if (!user) return res.send({ 'error': 'There is no user registered yet' });
 
         return res.send(user);
     }
 
     static async deleteUser(req: any, res: any) {
         var user = await UserModel.findOne().exec();
-        if (!user) return res.status(409).send({ 'error': 'There is no user registered yet' });
+        if (!user) return res.send({ 'error': 'There is no user registered yet' });
 
         await UserModel.deleteOne().exec();
 
@@ -50,10 +50,10 @@ class UserController {
         const { currency } = req.body;
 
         var user = await UserModel.findOne().exec();
-        if (!user) return res.status(409).send({ 'error': 'There is no user registered yet' });
+        if (!user) return res.send({ 'error': 'There is no user registered yet' });
 
         if (user.followedCurrencies.indexOf(currency) === -1) {
-            return res.status(409).send({ 'error': 'You wasn\'t subscribed to that currency' });
+            return res.send({ 'error': 'You wasn\'t subscribed to that currency' });
         }
         for (let i = 0; i < user.followedCurrencies.length; i++) {
             if (user.followedCurrencies[i] === currency) {
@@ -68,7 +68,7 @@ class UserController {
 
     static async getCurrenciesHistory(req: any, res: any) {
         var user = await UserModel.findOne().exec();
-        if (!user) return res.status(409).send('There is no user registered yet')
+        if (!user) return res.send({ 'error': 'There is no user registered yet' });
 
         var jsonResponse: IHistory[] = [];
         var i = 0;
