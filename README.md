@@ -124,3 +124,5 @@ Following is a more-in-depth list of the available command for each service:
 Backend position skill assessment home assignment.
 
 **[Place here any extra documentation or comments you want us to have.]**
+
+When on first execution, to subscribe currencies, you will need to wait until the service gets the first data. Other wise, the currencies will not be displayed until the first history data is getted.
